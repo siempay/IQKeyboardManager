@@ -50,6 +50,10 @@ Codeless drop-in universal library allows to prevent issues of keyboard sliding 
      Invalid point value.
      */
     private static let  kIQCGPointInvalid = CGPoint.init(x: CGFloat.greatestFiniteMagnitude, y: CGFloat.greatestFiniteMagnitude)
+	/**
+	Default tag to ignore textFeiled
+	*/
+	public static let  kIQIgnoreTextFieldTag =   -1999
 
     ///---------------------------
     ///  MARK: UIKeyboard handling
@@ -1755,6 +1759,8 @@ Codeless drop-in universal library allows to prevent issues of keyboard sliding 
 
     /**  UITextFieldTextDidBeginEditingNotification, UITextViewTextDidBeginEditingNotification. Fetching UITextFieldView object. */
     @objc internal func textFieldViewDidBeginEditing(_ notification: Notification) {
+
+		guard (notification.object as? UITextField)?.tag != IQKeyboardManager.kIQIgnoreTextFieldTag else { return }
 
         let startTime = CACurrentMediaTime()
         showLog("****** \(#function) started ******", indentation: 1)
